@@ -1,2 +1,0 @@
-bakalarka_editor
-================

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssociationRules xmlns="http://keg.vse.cz/lm/AssociationRules/v1.0"> <!-- asociační pravidla transformovaná do podoby použitelné pro business rules -->
+    <AssociationRule id="648">
+        <Text>duration(12) &gt;:&lt; rating(A)</Text> <!-- textová podoba pravidla - jen informační -->
+        
+        <Antecedent> <!-- podmínka pravidla -->
+            <Cedent connective="Disjunction"> <!-- cedentů může být víc => mohou být vzájemně vnořené (jde vlastně o závorky ve výsledném pravidle); spojka je Conjunction/Disjunction/Negation -->
+                <Attribute format="uri:format/pocet-hvezd">
+                    <Category id="uri:bins/7929" />
+                </Attribute>
+                <Attribute format="uri:format/gamespot-hodnoceni"> <!-- kategorií (discretizací) zde může být víc - z pohledu pravidla to znamená jejich spojení pomocí disjunkce -->
+                    <Category id="uri:bins/79229" />
+                    <Category id="uri:bins/79432" />
+                </Attribute>
+            </Cedent>
+        </Antecedent>
+        
+        <Consequent> <!-- v případě asociačních pravidel používaných pro doporučování zde bude tvar doporučení (stejný, jako antecedent) -->
+            <Cedent connective="Conjunction">
+                <Attribute format="uri:format/pocet-hvezd"><!-- Tady nevím, co by mělo být -->
+                    <Category id="uri:bins/791232" /><!-- Tady nevím, co by mělo být -->
+                </Attribute>
+                
+            </Cedent>
+        </Consequent>
+        
+        <!-- v pravidle mohou být uloženy další informace => z pohledu editoru je ignorujte -->
+        <IMValues>
+            <IMValue selected="ok" name="FUI" type="Abs">0.7087214225</IMValue>
+            <IMValue selected="ok" name="SUPP" type="Abs">0.1354149814</IMValue>
+        </IMValues>
+        
+        <FourFtTable a="837" b="344" c="990" d="4010"/>
+        
+    </AssociationRule>
+</AssociationRules>

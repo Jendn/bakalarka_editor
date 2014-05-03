@@ -201,6 +201,8 @@ function processBin($bin)
             
             $pomocnaClean = substr($word, 1);
             $clean[$x] = substr($pomocnaClean, 0, -1);
+            $x++;
+            $clean[$x] = ")";
           }          
        }
        elseif($zacatek == 1) {

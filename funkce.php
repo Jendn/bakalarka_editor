@@ -143,4 +143,84 @@ function processBin($bin)
                 return $textBin;
         }
     }
+    
+    function sestavXML($formats, $text) {
+      $cleanArr = clean($text);
+      return $cleanArr;
+    }
+    
+    function clean($text) {
+      $arrOrig = preg_split('/[\s]+/' ,$text);
+      $x = 0;
+      $zacatek = 0;
+      foreach($arrOrig as $word) {
+        
+        if(startsWith($word,"not(")) {
+           $clean[$x] = "not(";
+           $x++;
+           $clean[$x] = substr($word, 4);
+           $word = $clean[$x];
+        } 
+        if(startsWith($word, '"') && !(endsWith($word, ")"))) {
+         if ($zacatek != 1) {
+          $zacatek = 1;
+          
+          if(endsWith($word, '"')) {
+            $zacatek = 0;
+            $pomocnaClean = substr($word, 1);
+            $clean[$x] = substr($pomocnaClean, 0, -1);
+          } else {
+          $clean[$x] = substr($word, 1);  }
+          } else {
+            return "Chyba, zacatek uvozovek pred ukoncenim predchoziho retezce $x";
+          }
+        }
+       elseif(endsWith($word, '"')) {
+          if ($zacatek != 0) {
+          $zacatek = 0;
+          $x--;
+          $clean[$x] .= " ";
+          $clean[$x] .= substr($word, 0, -1);
+          } else {
+            return "Chyba, konec uvozovek pred zacatkem $x";
+          }
+       } elseif(endsWith($word, ')')) {
+          $word = substr($word, 0, -1);
+          if(endsWith($word, '"') && !(startsWith($word, '"'))) {
+            if($zacatek == 1) {
+               $x--;
+               $clean[$x] .= substr($word, 0, -1);
+               $x++;
+               $clean[$x] = ")";
+            } else {
+               return "Chyba, konec uvozovek pred zacatkem $x";
+            }
+            
+          }
+          if(endsWith($word, '"') && startsWith($word, '"')) {
+            
+            $pomocnaClean = substr($word, 1);
+            $clean[$x] = substr($pomocnaClean, 0, -1);
+          }          
+       }
+       elseif($zacatek == 1) {
+        $x--;
+        $clean[$x] .= $word;
+       } else {
+         $clean[$x] = $word;
+       }
+       $x++;
+      }
+      return $clean;
+      
+    }
+    
+    function startsWith($haystack, $needle)
+{
+    return $needle === "" || strpos($haystack, $needle) === 0;
+}
+    function endsWith($haystack, $needle)
+{
+    return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+}
 ?>

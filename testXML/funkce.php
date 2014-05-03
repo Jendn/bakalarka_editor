@@ -17,7 +17,7 @@ function process($pravidlaXML, $metaXML) {
                foreach ($ar->Antecedent as $ante) {
                      $text .= "IF \n";
                   foreach($ante->Cedent as $cedent) {
-                     $text .= processCedent($metaXML, $cedent);
+                     $text .= processCedent($metaXML, $cedent, "or");
                       
                   }
                }
@@ -25,7 +25,7 @@ function process($pravidlaXML, $metaXML) {
                 $text .= "THEN \n";
                 foreach($ar->Consequent as $conse) {
                    foreach($conse->Cedent as $cedent) {
-                       $text .= processCedent($metaXML, $cedent);
+                       $text .= processCedent($metaXML, $cedent, "or");
                    }
                 }                  
                }
@@ -38,20 +38,24 @@ function process($pravidlaXML, $metaXML) {
  * @param $text
  * @return array
  */
-function processCedent($metaXML, $cedent)
+function processCedent($metaXML, $cedent, $puvSpoj)
 {
     $textCed = "";
+    $neg = 0;
+    $jePar = 0;
     $attrs = $cedent->attributes();
     if ($attrs["connective"] == "Disjunction") {
         $spojka = "or";
     } else if ($attrs["connective"] == "Conjunction") {
         $spojka = "and";
     } else {
-        $spojka = "";
+        $spojka = $puvSpoj;
+        $neg = 1;
     }
    // echo $cedent->asXML();
     foreach($cedent->Cedent as $cedChild) {
-        $textCed .= processCedent($metaXML, $cedChild);
+        $textCed .= processCedent($metaXML, $cedChild, $spojka);
+        $textCed .= " CHILD ";
         $jePar = 1;
         $textCed .= " $spojka ";
    //     return $textCed;
@@ -61,7 +65,7 @@ function processCedent($metaXML, $cedent)
     }
       
      if($jePar != 1) {
-    if ($spojka == "") {
+    if ($neg == 1) {
         $textCed .= "not(";
         }
         foreach ($cedent->Attribute as $attr) {
@@ -106,7 +110,7 @@ function processCedent($metaXML, $cedent)
         $lengthS = strlen($spojka) + 2;
         $textCed = substr($textCed, 0, -$lengthS);
         }
-        if ($spojka == "") {
+        if ($neg == 1) {
           $textCed .= ")";
         }
         return $textCed;

@@ -1,4 +1,6 @@
-<?php require "funkce.php" ?>
+<?php require "funkce.php";
+if (isset($_POST['rule']));
+$newXML = sestavXML($_POST['formats'], $_POST['rule']);                 ?>
 
 <!DOCTYPE html       PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">                 
@@ -20,18 +22,25 @@
           <div class="texta">           <h2>Rule editor</h2>                                                                            
             <form action="" method="post">                                                                                        
               <div>                                                                                                
-                <p>                                                                                              
-                  <input type="radio" name="stejne" value="prvni">SBVR<br />                                                                                                
-                  <input type="radio" name="stejne" value="druha">DRL                                                                                                  
+                <p>                                                                                                 
                   <input type="submit" value="Proved" id="sub">                                                                                       
                 </p>                                                                          
               </div>                 
-<textarea autofocus="autofocus" cols="75" rows="20" id="drop"><?php
+<textarea autofocus="autofocus" cols="75" rows="20" id="drop" name="rule"><?php
                $pravidlaXML = simplexml_load_file("testXML/data3.xml");
                $metaXML = simplexml_load_file("testXML/metaatributes.xml");
                echo process($pravidlaXML, $metaXML);
+               echo " /n ";
+               echo var_dump(@$newXML);
                
-               ?></textarea>                                                                                             
+               ?></textarea> 
+               <?php     $nazvy = draggItems($metaXML);
+                          foreach($nazvy as $value)
+{
+  echo '<input type="hidden" name="formats[]" value="'. $value. '">';
+}
+                        
+                  ?>                                                                                           
             </form>                                                               
           </div>                                                   
         </div>                                                   

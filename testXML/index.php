@@ -27,7 +27,7 @@
                 </p>                                                                          
               </div>                 
 <textarea autofocus="autofocus" cols="75" rows="20" id="drop"><?php
-               $pravidlaXML = simplexml_load_file("testXML/data3.xml");
+               $pravidlaXML = simplexml_load_file("testXML/data2.xml");
                $metaXML = simplexml_load_file("testXML/metaatributes.xml");
                echo process($pravidlaXML, $metaXML);
                

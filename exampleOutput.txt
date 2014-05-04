@@ -1,0 +1,130 @@
+{
+  [0]=>
+  string(2) "IF"
+  [1]=>
+  string(4) "not("
+  [2]=>
+  string(18) "hvezdickovy system"
+  [3]=>
+  string(6) "equals"
+  [4]=>
+  string(1) "5"
+  [5]=>
+  string(3) "and"
+  [6]=>
+  string(18) "Gamespot hodnoceni"
+  [7]=>
+  string(6) "equals"
+  [8]=>
+  string(2) "or"
+  [9]=>
+  string(2) "is"
+  [10]=>
+  string(6) "higher"
+  [11]=>
+  string(4) "than"
+  [12]=>
+  string(1) "0"
+  [13]=>
+  string(3) "and"
+  [14]=>
+  string(6) "equals"
+  [15]=>
+  string(2) "or"
+  [16]=>
+  string(2) "is"
+  [17]=>
+  string(5) "lower"
+  [18]=>
+  string(4) "than"
+  [19]=>
+  string(2) "30"
+  [20]=>
+  string(2) "or"
+  [21]=>
+  string(6) "equals"
+  [22]=>
+  string(3) "100"
+  [23]=>
+  string(1) ")"
+  [24]=>
+  string(3) "and"
+  [25]=>
+  string(18) "Gamespot hodnoceni"
+  [26]=>
+  string(6) "equals"
+  [27]=>
+  string(2) "or"
+  [28]=>
+  string(2) "is"
+  [29]=>
+  string(6) "higher"
+  [30]=>
+  string(4) "than"
+  [31]=>
+  string(1) "0"
+  [32]=>
+  string(3) "and"
+  [33]=>
+  string(6) "equals"
+  [34]=>
+  string(2) "or"
+  [35]=>
+  string(2) "is"
+  [36]=>
+  string(5) "lower"
+  [37]=>
+  string(4) "than"
+  [38]=>
+  string(2) "30"
+  [39]=>
+  string(2) "or"
+  [40]=>
+  string(6) "equals"
+  [41]=>
+  string(3) "100"
+  [42]=>
+  string(2) "or"
+  [43]=>
+  string(18) "Gamespot hodnoceni"
+  [44]=>
+  string(6) "equals"
+  [45]=>
+  string(2) "or"
+  [46]=>
+  string(2) "is"
+  [47]=>
+  string(6) "higher"
+  [48]=>
+  string(4) "than"
+  [49]=>
+  string(1) "0"
+  [50]=>
+  string(3) "and"
+  [51]=>
+  string(6) "equals"
+  [52]=>
+  string(2) "or"
+  [53]=>
+  string(2) "is"
+  [54]=>
+  string(5) "lower"
+  [55]=>
+  string(4) "than"
+  [56]=>
+  string(2) "30"
+  [57]=>
+  string(2) "or"
+  [58]=>
+  string(6) "equals"
+  [59]=>
+  string(3) "100"
+  [60]=>
+  string(4) "THEN"
+  [61]=>
+  string(18) "hvezdickovy system"
+  [62]=>
+  string(6) "equals"
+  [63]=>
+  string(1) "1"
+}

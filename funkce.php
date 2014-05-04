@@ -146,7 +146,44 @@ function processBin($bin)
     
     function sestavXML($formats, $text) {
       $cleanArr = clean($text);
-      return $cleanArr;
+      $vysledek = model($cleanArr, $formats);
+      return $vysledek;
+    }
+    
+    function model($cleanArr, $formats) {
+       $expects = array();
+       $expects[] = "IF";
+       $x = 0;
+       $xml = new SimpleXMLElement('<AssociationRule/>');
+       for($x; $x <= count($cleanArr); $x++) {
+        foreach($expects as $expect) {
+          if($cleanArr[$x] == $expect) {
+            $control = true;
+            break;
+          }  }
+          if($control != true) {
+            return "FAILED TO PROCESS, EXPECTED VALUES ".print_r($expects);
+          }
+          switch($cleanArr[$x]) {
+                case "IF": $antecedent = $xml->addChild("Antecedent"); 
+                           $last = $antecedent;
+                           $expects = $formats;
+                           break;
+                case "not(": $cedent = $last->addChild("Cedent");
+                             $cedent->addAttribute('connective', "Negation");
+                             $last = $cedent;
+                             break;
+                default: if($last->getName() == "Cedent") {
+                $attribute = $last->addChild("Attribute");
+                $attribute->addAttribute("format", "$cleanArr[$x]");
+                return $xml;
+                } else {
+                  $category = $last->addChild("Category");
+                  $category->addAttribute("id", "");
+                } break;
+          
+          }
+       }
     }
     
     function clean($text) {

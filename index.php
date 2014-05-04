@@ -23,7 +23,7 @@ $newXML = sestavXML($_POST['formats'], $_POST['rule']);                 ?>
             <form action="" method="post">                                                                                        
               <div>                                                                                                
                 <p>                                                                                                 
-                  <input type="submit" value="Proved" id="sub">                                                                                       
+                  <input type="submit" value="Proved" id="sub" />                                                                                      
                 </p>                                                                          
               </div>                 
 <textarea autofocus="autofocus" cols="75" rows="20" id="drop" name="rule"><?php
@@ -31,7 +31,7 @@ $newXML = sestavXML($_POST['formats'], $_POST['rule']);                 ?>
                $metaXML = simplexml_load_file("testXML/metaatributes.xml");
                echo process($pravidlaXML, $metaXML);
                echo " /n ";
-               echo var_dump(@$newXML);
+               echo $newXML->asXML();
                
                ?></textarea> 
                <?php     $nazvy = draggItems($metaXML);

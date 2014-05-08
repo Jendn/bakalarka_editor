@@ -30,7 +30,9 @@ $newXML = sestavXML($_POST['formats'], $_POST['rule']);                 ?>
                $pravidlaXML = simplexml_load_file("testXML/data3.xml");
                $metaXML = simplexml_load_file("testXML/metaatributes.xml");
                echo process($pravidlaXML, $metaXML);
-               echo " /n ";
+               echo " 
+                ";
+              // echo print_r($newXML); //->asXML();
                echo $newXML->asXML();
                
                ?></textarea> 

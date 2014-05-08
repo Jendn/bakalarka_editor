@@ -146,6 +146,7 @@ function processBin($bin)
     
     function sestavXML($formats, $text) {
       $cleanArr = clean($text);
+      $cleanArr = connect($cleanArr);
       $vysledek = model($cleanArr, $formats);
       return $vysledek;
     }
@@ -161,9 +162,11 @@ function processBin($bin)
             $control = true;
             break;
           }  }
+        /*  if($expects[0] == "Anything")
+          $control = true;
           if($control != true) {
             return "FAILED TO PROCESS, EXPECTED VALUES ".print_r($expects);
-          }
+          }       */
           switch($cleanArr[$x]) {
                 case "IF": $antecedent = $xml->addChild("Antecedent"); 
                            $last = $antecedent;
@@ -171,13 +174,41 @@ function processBin($bin)
                            break;
                 case "not(": $cedent = $last->addChild("Cedent");
                              $cedent->addAttribute('connective', "Negation");
-                             $last = $cedent;
+                            // $last = $cedent;
+                             $expects = $formats;
+                             $state = "Ced";
                              break;
-                default: if($last->getName() == "Cedent") {
-                $attribute = $last->addChild("Attribute");
+                case "equals": $expects = ("Anything");
+                case "equals or is higher than": $category = $attribute->addChild("Category");
+                                                 $closure = "closed";
+                                                 $state = "INTL";
+                                                 break;                
+                case "equals or is lower than":  $closure .= "Closed";
+                                                 $state = "INTR";
+                                                 break;
+                case "is higher than":  $category = $attribute->addChild("Category");
+                                                 $closure = "open";
+                                                 $state = "INTL";
+                                                 break;
+                case "is lower than":            $closure .= "Open";
+                                                 $state = "INTR";
+                                                 break;
+                case "and": if ($state=="INTL");
+                               
+                                break;              ;
+                case "or":     break;
+                default: if($state == "Ced") {
+                $attribute = $cedent->addChild("Attribute");
                 $attribute->addAttribute("format", "$cleanArr[$x]");
-                return $xml;
-                } else {
+                } else if($state == "INTL") {
+                   $category->addAttribute("leftMargin", "$cleanArr[$x]");  
+                } else if($state == "INTR") {
+                   $category->addAttribute("rightMargin", "$cleanArr[$x]");
+                   $category->addAttribute("closure", "$closure");
+                   $state = "";
+                   return $xml;  
+                }                
+                else {
                   $category = $last->addChild("Category");
                   $category->addAttribute("id", "");
                 } break;
@@ -252,6 +283,31 @@ function processBin($bin)
       }
       return $clean;
       
+    }
+    
+    function connect($toClean) {
+      $clean = array();
+      $y = 0;
+       for($x = 0; $x < count($toClean); $x++) {
+          if($toClean[$x] == "equals" && $toClean[$x+1] == "or" && $toClean[$x+2] == "is" && $toClean[$x+3] == "higher" && $toClean[$x+4] == "than") {
+             $clean[$y] = "equals or is higher than";
+             $x = $x+4; 
+          } else if($toClean[$x] == "equals" && $toClean[$x+1] == "or" && $toClean[$x+2] == "is" && $toClean[$x+3] == "lower" && $toClean[$x+4] == "than") {
+             $clean[$y] = "equals or is lower than";
+             $x = $x+4; 
+          } else if($toClean[$x] == "is" && $toClean[$x+1] == "higher" && $toClean[$x+2] == "than") {
+             $clean[$y] = "is higher than";
+             $x = $x+2;
+             } else if($toClean[$x] == "is" && $toClean[$x+1] == "lower" && $toClean[$x+2] == "than") {
+             $clean[$y] = "is lower than";
+             $x = $x+2;
+             } else {
+             $clean[$y] = $toClean[$x];
+             }
+       $y++;
+       }
+    
+    return $clean;
     }
     
     function startsWith($haystack, $needle)
